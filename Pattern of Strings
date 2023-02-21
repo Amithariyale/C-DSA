@@ -1,0 +1,21 @@
+//User function template for C++
+class Solution{
+public:	
+	
+	vector<string> pattern(string S)
+	{
+	    // Your code goes here
+	
+	    string s;
+	    vector<string>ans;
+	   int low=S.length();
+	   while(low>0){
+	       s=S.substr(0,low);
+	       ans.push_back(s);
+	       low--;
+	   }
+	   return ans;
+	    
+	}
+
+};
