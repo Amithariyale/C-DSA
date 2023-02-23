@@ -1,0 +1,30 @@
+//User function template for C++
+
+class Solution
+{
+    private:
+    void solve(stack<int>&s,int n,int cnt){
+        
+        if(cnt!=n/2){
+            int num=s.top();
+            s.pop();
+            solve(s,n,cnt+1);
+            s.push(num);
+            return ;
+        }
+        else{
+            s.pop();
+            return ;
+        }
+        
+    }
+    public:
+    //Function to delete middle element of a stack.
+    void deleteMid(stack<int>&s, int sizeOfStack)
+    {
+        // code here.. 
+        int cnt=0;
+        solve(s,sizeOfStack,cnt);
+        
+    }
+};
