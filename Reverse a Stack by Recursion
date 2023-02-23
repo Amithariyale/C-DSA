@@ -1,0 +1,27 @@
+//User function Template for C++
+
+class Solution{
+private:
+    void solve(stack<int> &St,int n,int* &arr,int i){
+        if(St.empty()){
+            
+            return ;
+        }
+        
+        arr[i]=St.top();
+        St.pop();
+        
+        solve(St,n-1,arr,i+1);
+        
+        St.push(arr[n]);
+        
+    }
+public:
+    void Reverse(stack<int> &St){
+        
+        int n=St.size();
+        int* arr=new int[n];
+        int i=0;
+        solve(St,n-1,arr,i);
+    }
+};
