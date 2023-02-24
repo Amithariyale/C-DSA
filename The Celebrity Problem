@@ -1,0 +1,54 @@
+//User function template for C++
+
+class Solution 
+{
+    public:
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int> >& M, int n) 
+    {
+        // code here 
+        int row;
+        int col;
+        int cnt1=0;
+        int cnt2=0;
+        for(int i=0;i<n;i++){
+            int j=0;
+            while(j<n){
+                
+                if(M[i][j]==0){
+                    j++;
+                    cnt1++;
+                }
+                else{
+                    cnt1=0;
+                    break;
+                }
+                if(cnt1==n){
+                    row=i;
+                }
+            }
+            int k=0;
+            while(k<n){
+                
+                if(M[k][i]==1 && k!=i){
+                    k++;
+                    cnt2++;
+                }
+                else if(M[k][i]==0 && k!=i){
+                    cnt2=0;
+                    break;
+                }
+                else{
+                    k++;
+                }
+                if(cnt2==n-1){
+                    col=i;
+                }
+            }
+            if(row==col){
+                return row;
+            }
+        }
+        return -1;
+    }
+};
