@@ -1,0 +1,23 @@
+//User function template for C++
+
+class Solution{
+public:
+    string rremove(string s){
+        // code here
+        while(1){
+            string ans;
+            int i=0;
+            while(i<s.length()){
+                int j=i+1;
+                while(s[i]==s[j] && j<s.length())
+                    j++;
+                if(j==i+1)
+                    ans+=s[i];
+                i=j;
+            }
+            if(ans.size()==s.size()) break;
+            s=ans;
+        }
+        return s;
+    }
+};
