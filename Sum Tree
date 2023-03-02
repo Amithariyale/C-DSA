@@ -1,0 +1,52 @@
+/*  Tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+// Should return true if tree is Sum Tree, else false
+class Solution
+{
+    private:
+    int sum(Node* root){
+        if(root==NULL){
+            return 0;
+        }
+        if(root->left==NULL && root->right==NULL){
+            return root->data;
+        }
+        
+        int left=sum(root->left);
+        int right=sum(root->right);
+        int ans=root->data+left+right;
+        return ans;
+    }
+    public:
+    bool isSumTree(Node* root)
+    {
+         // Your code here
+         if(root==NULL){
+             return true;
+         }
+         if(root->left==NULL && root->right==NULL){
+             return true;
+         }
+         
+        bool left=isSumTree(root->left);
+        bool right=isSumTree(root->right);
+        
+        int leftsum=sum(root->left);
+        int rightsum=sum(root->right);
+        bool checksum=true;
+        if(leftsum!=0 || rightsum!=0){
+            checksum=leftsum+rightsum==root->data;
+        }
+        if(left && right && checksum){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
