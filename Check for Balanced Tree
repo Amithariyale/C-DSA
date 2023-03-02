@@ -1,0 +1,55 @@
+/* A binary tree node structure
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
+
+class Solution{
+    private:
+    pair<int,bool> height(Node* root){
+        if(root==NULL){
+            pair<int,bool>ans=make_pair(0,true);
+            return ans;
+        }
+        
+        pair<int,bool>left=height(root->left);
+        pair<int,bool>right=height(root->right);
+        
+        int h1=left.first;
+        int h2=right.first;
+        int dif=0;
+        if(h1>=h2){
+            dif=h1-h2;
+        }
+        else{
+            dif=h2-h1;
+        }
+        pair<int,bool>ans;
+        ans.first=max(left.first,right.first)+1;
+        if(left.second && right.second){
+            if(dif<=1){
+                ans.second=true;
+            }
+            else{
+                ans.second=false;
+            }
+        }
+        return ans;
+    }
+    public:
+    //Function to check whether a binary tree is balanced or not.
+    bool isBalanced(Node *root)
+    {
+        //  Your Code here
+        return height(root).second;
+    }
+};
