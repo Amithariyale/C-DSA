@@ -1,0 +1,54 @@
+
+
+/* A binary tree node
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
+
+//Function to return a list containing elements of left view of the binary tree.
+vector<int> leftView(Node *root)
+{
+   // Your code here
+   vector<int>ans;
+   if(root==NULL){
+       return ans;
+   }
+   map<int,int>node;
+   queue<pair<Node*,int> >q;
+   
+   q.push(make_pair(root,0));
+   
+   while(!q.empty()){
+       
+       pair<Node*,int>temp=q.front();
+       q.pop();
+       
+       Node* left=temp.first;
+       int lvl=temp.second;
+       
+       if(node.find(lvl)==node.end()){
+           node[lvl]=left->data;
+       }
+       if(left->left){
+           q.push(make_pair(left->left,lvl+1));
+       }
+       if(left->right){
+           q.push(make_pair(left->right,lvl+1));
+       }
+   }
+   
+   for(auto i:node){
+       ans.push_back(i.second);
+   }
+   return ans;
+}
