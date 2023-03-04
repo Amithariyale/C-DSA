@@ -1,0 +1,41 @@
+
+
+//User function Template for C++
+
+/* Tree node structure  used in the program
+ struct Node
+ {
+     int data;
+     Node* left, *right;
+}; */
+
+vector<int> sibling(Node* node,vector<int>&ans){
+    if(node==NULL){
+        return ans;
+    }
+    
+    
+    if(node->left && !node->right){
+        ans.push_back(node->left->data);
+    }
+    else if(node->right && !node->left){
+        ans.push_back(node->right->data);
+        
+    }
+
+    sibling(node->left,ans);
+    sibling(node->right,ans);
+    
+    return ans;
+}
+vector<int> noSibling(Node* node)
+{
+    // code her
+    vector<int>ans;
+    sibling(node,ans);
+    if(ans.empty()){
+        ans.push_back(-1);
+    }
+    sort(ans.begin(),ans.end());
+    return ans;
+}
