@@ -1,0 +1,44 @@
+
+
+/* Tree node structure
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};*/
+
+//Function to return a tree created from postorder and inoreder traversals.
+int findPosition(int in[],int start,int end,int element){
+    for(int i=start;i<=end;i++){
+        if(in[i]==element)
+            return i;
+    }
+}
+
+Node* solve(int in[],int post[],int &index,int start,int end){
+    if(index<0 || start>end){
+        return NULL;
+    }
+    
+    int element=post[index--];
+    Node* root=new Node(element);
+    int position=findPosition(in,start,end,element);
+    
+    root->right=solve(in,post,index,position+1,end);
+    root->left=solve(in,post,index,start,position-1);
+    
+    return root;
+}
+Node *buildTree(int in[], int post[], int n) {
+    // Your code here
+    int index=n-1;
+    Node* ans=solve(in,post,index,0,n-1);
+    return ans;
+}
