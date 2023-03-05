@@ -1,0 +1,39 @@
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+/*you are required to
+complete this function */
+class Solution
+{
+    private:
+    void solve(Node* root,int s,bool &istrue,int sum){
+        if(root==NULL){
+            return ;
+        }
+        if(root->left==NULL && root->right==NULL){
+            sum+=root->data;
+            if(sum==s){
+                istrue=true;
+            }
+            return ;
+        }
+        
+        sum+=root->data;
+        
+        solve(root->left,s,istrue,sum);
+        solve(root->right,s,istrue,sum);
+        
+    }
+    public:
+    bool hasPathSum(Node *root, int S) {
+    // Your code here
+    bool istrue=false;
+    int sum=0;
+    solve(root,S,istrue,sum);
+    return istrue;
+}
+};
