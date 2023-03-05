@@ -1,0 +1,93 @@
+//User function Template for C++
+
+/*
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution {
+  private:
+    Node* parentMapping(Node* root,int target,map<Node*,Node*>&parent){
+        
+        queue<Node*>q;
+        q.push(root);
+        parent[root]=NULL;
+        Node* ans=NULL;
+        while(!q.empty()){
+            Node* temp=q.front();
+            q.pop();
+            
+            if(temp->data==target){
+                ans=temp;
+            }
+            if(temp->left){
+                q.push(temp->left);
+                parent[temp->left]=temp;
+            }
+            if(temp->right){
+                q.push(temp->right);
+                parent[temp->right]=temp;
+            }
+        }
+        return ans;
+    }
+    
+    int burntree(Node* root,map<Node*,Node*>parent){
+        
+        map<Node*,bool>visited;
+        queue<Node*>q;
+        
+        q.push(root);   
+        visited[root]=true;
+        
+        int ans=0;
+        
+        while(!q.empty()){
+            bool flag=0;
+            int n=q.size();
+            for(int i=0;i<n;i++){
+                Node* temp=q.front();
+                q.pop();
+            
+                if(temp->left && !visited[temp->left]){
+                    q.push(temp->left);
+                    visited[temp->left]=true;
+                    flag=1;
+                   
+                }
+                if(temp->right && !visited[temp->right]){
+                    q.push(temp->right);
+                    visited[temp->right]=true;
+                    flag=1;
+                    
+                }
+                if(parent[temp] && !visited[parent[temp]]){
+                    q.push(parent[temp]);
+                    visited[parent[temp]]=true;
+                    flag=1;
+                }
+            }
+            if(flag==1){
+                ans++;
+            }
+            
+        }
+        return ans;
+    }
+  public:
+    int minTime(Node* root, int target) 
+    {
+        // Your code goes here
+        map<Node*,Node*>parent;
+        Node* targetNode=parentMapping(root,target,parent);
+        int ans=burntree(targetNode,parent);
+        return ans;
+    }
+};
