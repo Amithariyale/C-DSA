@@ -1,0 +1,38 @@
+class Solution
+{
+    private:
+        void permutation(string S,int i,int n,vector<string>& temp){
+            if(i>=n){
+                temp.push_back(S);
+                return ;
+            }
+            
+            for(int j=i;j<n;j++){
+                
+                swap(S[i],S[j]);
+                permutation(S,i+1,n,temp);
+                swap(S[i],S[j]);
+                
+            }
+        }
+	public:
+		vector<string>find_permutation(string S)
+		{
+		    // Code here there
+		    vector<string>temp;
+		    vector<string>ans;
+		    int i=0;
+		    int n=S.length();
+		    permutation(S,i,n,temp);
+		    map<string,bool>m;
+		    for(int i=0;i<temp.size();i++){
+		        if(!m[temp[i]]){
+		            ans.push_back(temp[i]);
+		            m[temp[i]]=true;
+		        }
+		    }
+		    
+		    sort(ans.begin(),ans.end());
+		    return ans;
+		}
+};
