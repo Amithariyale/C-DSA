@@ -1,0 +1,26 @@
+// User function template for C++
+
+class Solution{
+  public:
+    int MissingNumber(vector<int>& array, int n) {
+        
+        sort(array.begin(),array.end());
+        
+        for(int i=0; i<n-1;i++){
+            
+            if(array[0]!=1){
+                
+                return 1;
+                break;
+                
+            }
+            else if(array[i+1]-array[i]==2){
+                
+                return array[i]+1;
+                break;
+            }
+            
+        }
+        return array[n-2]+1;
+    }
+};
