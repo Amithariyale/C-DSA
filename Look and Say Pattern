@@ -1,0 +1,30 @@
+//User function template for C++
+
+class Solution
+{
+  public:
+    string lookandsay(int n) {
+        // code here
+        if(n==1){
+            return "1";
+        }
+        
+        string temp=lookandsay(n-1);
+        
+        string ans="";
+        for(int i=0;i<temp.length();i++){
+            int cnt=0;
+            char ch=temp[i];
+            while(ch==temp[i] && i<temp.length()){
+                cnt++;
+                i++;
+            }
+            
+            string c=to_string(cnt);
+            ans+=c;
+            ans+=ch;
+            i--;
+        }
+        return ans;
+    }   
+};
