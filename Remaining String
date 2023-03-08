@@ -1,0 +1,29 @@
+//User function template for C++
+class Solution{
+public:	
+	
+	string printString(string &S, char ch, int count)
+	{
+	    // Your code goes here
+	    if(count==0){
+	        return S;
+	    }
+	    int n=S.size();
+	    int cnt=0;
+	    for(int i=0;i<n;i++){
+	        if(S[i]==ch){
+	            cnt++;
+	        }
+	        if(cnt==count && i!=n-1){
+	            string ans=S.substr(i+1,n-i-1);
+	            return ans;
+	        }
+	        if(i==n-1){
+	        return "Empty string";
+	        }
+	    }
+	    if(cnt<count){
+	        return "Empty string";
+	    }
+	}
+};
