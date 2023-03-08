@@ -1,0 +1,32 @@
+//User function Template for C++
+
+class Solution{
+    public:
+    long long ExtractNumber(string S){
+        
+        //code here
+        int n=S.length();
+        bool skip=false;
+        long long int ans=0;
+        long long int num=0;
+        for(int i=0;i<n;i++){
+            
+            if(S[i]>='0' && S[i]<='8' && skip==false){
+                num=num*10+(S[i]-'0');
+            }
+            else if(S[i]==' ' || S[i]>='a' && S[i]<='z' || S[i]>='A' && S[i]<='Z'){
+                num=0;
+                skip=false;
+            }
+            else{
+                skip=true;
+                num=0;
+            }
+            ans=max(ans,num);
+        }
+        if(ans==0){
+            return -1;
+        }
+        return ans;
+    }
+};
