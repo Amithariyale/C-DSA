@@ -1,0 +1,36 @@
+//User function template for C++
+
+class Solution{   
+public:
+    string longestPalindrome(string S){
+        // code here 
+        int n=S.length();
+        int index=0;
+        int len=1;
+        for(int i=1;i<n;i++){
+            int j=i-1;
+            int k=i;
+            while(j>=0 && k<n && S[j]==S[k]){
+                
+                if(k-j+1>len){
+                    index=j;
+                    len=k-j+1;
+                }
+                j--;
+                k++;
+            }
+            j=i-1;
+            k=i+1;
+            while(j>=0 && k<n && S[j]==S[k]){
+                
+                if(k-j+1>len){
+                    index=j;
+                    len=k-j+1;
+                }
+                j--;
+                k++;
+            }
+        }
+        return S.substr(index,len);
+    }
+};
