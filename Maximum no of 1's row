@@ -1,0 +1,13 @@
+class Solution
+{
+    public:
+        int maxOnes (vector <vector <int>> &Mat, int N, int M)
+        {
+            // your code here
+            for(int i=0;i<M;i++){
+                for(int j=0;j<N;j++){
+                    if(Mat[j][i]==1)return j;
+                }
+            }
+        }
+};
