@@ -1,0 +1,15 @@
+class Solution{
+    public:
+    int search(int A[], int l, int h, int key){
+        // l: The starting index
+        // h: The ending index, you have to search the key in this range
+        
+        //complete the function here
+        while(l<=h){
+            if(A[l]==key)return l;
+            else if(A[h]==key)return h;
+            else l++;h--;
+        }
+        return -1;
+    }
+};
