@@ -1,0 +1,39 @@
+//User function template in C++
+
+
+class Solution{
+    public:
+    // A1[] : the input array-1
+    // N : size of the array A1[]
+    // A2[] : the input array-2
+    // M : size of the array A2[]
+    
+    //Function to sort an array according to the other array.
+    vector<int> sortA1ByA2(vector<int> A1, int N, vector<int> A2, int M) 
+    {
+        //Your code here
+        unordered_map<int,int>m;
+        vector<int>ans;
+        for(int i=0;i<N;i++){
+            m[A1[i]]++;
+        }
+        int c=0;
+        for(int i=0;i<M;i++){
+            if(m.find(A2[i])!=m.end()){
+                while(m[A2[i]]--){
+                    ans.push_back(A2[i]);
+                    c++;
+                }
+                m.erase(A2[i]);
+            }
+            
+        }
+        for(auto i:m){
+            while(i.second--){
+                ans.push_back(i.first);
+            }
+        }
+        sort(ans.begin()+c,ans.end());
+        return ans;
+    } 
+};
