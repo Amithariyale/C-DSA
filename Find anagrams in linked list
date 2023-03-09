@@ -1,0 +1,53 @@
+/*
+
+Definition for singly Link List Node
+struct Node
+{
+    char data;
+    Node* next;
+    Node(int x) {  data = x;  next = NULL; }
+};
+
+You can also use the following for printing the link list.
+printList(Node* node);
+*/
+
+class Solution {
+  public:
+    vector<Node*> findAnagrams(struct Node* head, string s) {
+        // code here
+        vector<Node*>ans;
+        vector<int>a(26,0),b(26,0);
+        int c1=0,c2=0;
+        for(int i=0;i<s.length();i++){
+            a[s[i]-'a']++;
+            if(a[s[i]-'a']==1)c1++;
+        }
+        Node* temp=head;
+        
+        while(temp!=NULL){
+            
+            b[temp->data-'a']++;
+            if(b[temp->data-'a']==a[temp->data-'a'])c2++;
+            while(b[temp->data-'a']>a[temp->data-'a']){
+                if(b[head->data-'a']==a[head->data-'a'])c2--;
+                b[head->data-'a']--;
+                head=head->next;
+            }
+            if(c1==c2){
+                ans.push_back(head);
+                Node* next=temp->next;
+                temp->next=NULL;
+                temp=next;
+                head=next;
+                c2=0;
+                fill(b.begin(),b.end(),0);
+            }
+            else{
+                temp=temp->next;
+            }
+        }
+        return ans;
+        
+    }
+};
