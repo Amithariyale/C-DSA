@@ -1,0 +1,22 @@
+//User function template for C++
+
+class Solution
+{
+  public:
+    //Function to find the minimum indexed character.
+    int minIndexChar(string str, string patt)
+    {
+        // Your code here
+        map<char,bool>m;
+        
+        for(int i=0;i<patt.length();i++){
+            m[patt[i]]=true;
+        }
+        for(int i=0;i<str.length();i++){
+            if(m[str[i]]){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
