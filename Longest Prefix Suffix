@@ -1,0 +1,23 @@
+
+//User function template for C++
+
+class Solution{
+  public:		
+	int lps(string s) {
+	    // Your code goes here
+	    int n=s.length();
+	    vector<int>l(n);
+	    
+	    for(int i=1;i<n;i++){
+	        int j=l[i-1];
+	        
+	        while(j>0 && s[i]!=s[j]){
+	            j=l[j-1];
+	        }
+	        if(s[i]==s[j])
+	            j++;
+	        l[i]=j;
+	    }
+	    return l[n-1];
+	}
+};
