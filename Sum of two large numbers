@@ -1,0 +1,50 @@
+// User function template for C++
+class Solution {
+  public:
+    string findSum(string X, string Y) {
+        // Your code goes here
+        int n=X.length();
+        int m=Y.length();
+        int i=n-1;
+        int j=m-1;
+        int carry=0;
+        string ans="";
+        while(i>=0 && j>=0){
+            
+            int num=(X[i--]-'0')+(Y[j--]-'0')+carry;
+            char ch=(num%10)+'0';
+            ans.push_back(ch);
+        
+            carry=num/10;
+        }
+        
+        while(i>=0){
+            int num=(X[i--]-'0')+carry;
+            char ch=(num%10)+'0';
+            ans.push_back(ch);
+            
+            carry=num/10;
+        }
+        while(j>=0){
+            int num=(Y[j--]-'0')+carry;
+            char ch=(num%10)+'0';
+            ans.push_back(ch);
+            
+            carry=num/10;
+        }
+        if(carry>0){
+            char ch=carry+'0';
+            ans.push_back(ch);
+        }
+
+        for(int i=ans.size()-1;i>=0;i--){
+            if(ans[i]=='0')ans.pop_back();
+            else break;
+        }
+        if(ans.size()==0)
+            return "0";
+            
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
