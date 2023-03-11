@@ -1,0 +1,31 @@
+// function to count for each element in 1st array,
+// elements less than or equal to it in 2nd array
+// function to count for each element in 1st array,
+// elements less than or equal to it in 2nd array
+class Solution{
+  public:
+    vector<int> countEleLessThanOrEqual(int arr1[], int arr2[], 
+                                 int m, int n)
+    {
+    //Your code goes here
+        sort(arr2,arr2+n);
+        vector<int>ans;
+        for(int i=0;i<m;i++){
+            int s=0,e=n-1,cnt=0;
+            
+            while(s<=e){
+                int mid=(s+e)/2;
+                if(arr1[i]>=arr2[mid])s=mid+1;
+                else if(arr1[i]<arr2[mid] && arr1[i]>=arr2[mid-1]){
+                    ans.push_back(mid);
+                    break;
+                }
+                else e=mid-1;
+            }
+            if(s>e){
+                ans.push_back(s);
+            }
+        }
+        return ans;
+    }
+};
