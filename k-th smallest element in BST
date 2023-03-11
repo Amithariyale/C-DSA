@@ -1,0 +1,38 @@
+/*Complete the function below
+
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+    private:
+    void find(Node* root,int k,int& i,int&ans){
+        if(root==NULL){
+            return ;
+        }
+        
+        find(root->left,k,i,ans);
+        
+        i++;
+        if(i==k)ans=root->data;
+        
+        find(root->right,k,i,ans);
+    }
+  public:
+    // Return the Kth smallest element in the given BST
+    int KthSmallestElement(Node *root, int K) {
+        // add code here.
+        int ans=-1;
+        int i=0;
+        find(root,K,i,ans);
+        return ans;
+    }
+};
