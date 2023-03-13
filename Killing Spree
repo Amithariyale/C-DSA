@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long int killinSpree(long long int n)
+    {
+        // Code Here
+        
+        long long int cnt=0;
+        long long int i=1;
+        while(n>=0){
+            long long int res=i*i;
+            
+            n=n-res;
+            if(n>=0)cnt++;
+            i++;
+        }
+        return cnt;
+    }
+};
