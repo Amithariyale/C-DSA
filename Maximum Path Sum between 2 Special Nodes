@@ -1,0 +1,74 @@
+/*
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+private:
+    int solve(Node* root,int& ans){
+        if (root==NULL)
+
+        {
+
+            return 0;
+
+        }
+
+        int left = solve(root->left, ans);
+
+        int right = solve(root->right, ans);
+
+        if (root->left!=NULL and root->right!=NULL)
+
+        {
+
+            ans = max(ans, root->data+left+right);
+
+            //cout<<ans<<" ";
+
+        }
+
+        if (!root->left)
+
+        {
+
+            return root->data + right;
+
+        }
+
+        if (!root->right)
+
+        {
+
+            return root->data + left;
+
+        }
+
+        return root->data + max(left, right);
+    }
+public:
+    int maxPathSum(Node* root)
+    {
+        // code here
+        int ans=INT_MIN;
+        int temp=solve(root,ans);
+        if (!root->left || !root->right)
+
+        {
+
+            return max(ans, temp);
+
+        }
+        return ans;
+        
+    }
+};
