@@ -1,0 +1,37 @@
+//User function Template for C++
+
+class Solution{
+public:
+    int isStackPermutation(int N,vector<int> &A,vector<int> &B){
+        
+        queue<int>q1;
+        queue<int>q2;
+        stack<int>s;
+        
+        for(int i=0;i<N;i++){
+            q1.push(A[i]);
+            q2.push(B[i]);
+        }
+        
+        while(!q1.empty()){
+            
+            int num=q1.front();
+            q1.pop();
+            
+            if(num==q2.front()){
+                q2.pop();
+                while(!s.empty()){
+                    if(s.top()==q2.front()){
+                        s.pop();
+                        q2.pop();
+                    }
+                    else break;
+                }
+            }
+            else
+                s.push(num);
+        }
+        
+        return s.empty()&&q1.empty();
+    }
+};
