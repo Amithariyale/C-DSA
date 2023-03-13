@@ -1,0 +1,28 @@
+    
+
+class Solution{
+public:    
+    bool isCompleteBT(Node* root){
+        //code here
+        queue<Node*>q;
+        q.push(root);
+        bool nullPre = false; 
+        while(!q.empty())
+        {
+            int x = q.size();
+            for(int i=0;i<x;i++)
+            {
+               Node*temp = q.front();
+               q.pop();
+               if(nullPre && temp!=NULL) return false;
+               if(temp!=NULL)
+                {
+                    q.push(temp->left);
+                    q.push(temp->right);
+                }
+                else nullPre = true;
+            }
+        }
+        return true;
+    }
+};
