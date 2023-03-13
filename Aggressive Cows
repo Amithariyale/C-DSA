@@ -1,0 +1,39 @@
+// User function Template for C++
+
+class Solution {
+private:
+    bool isValid(int n,int k,vector<int>& stalls,int dis){
+        
+        int cowcount=1;
+        int currpose=stalls[0];
+        
+        for(int i=1;i<n;i++){
+            if(abs(stalls[i]-currpose)>=dis){
+                cowcount++;
+                currpose=stalls[i];
+            }
+        }
+        if(cowcount>=k)return true;
+        return false;
+    }
+public:
+
+    int solve(int n, int k, vector<int> &stalls) {
+    
+        // Write your code here
+        sort(stalls.begin(),stalls.end());
+
+        int s=1;
+        int e=stalls[n-1];
+        
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            
+            if(isValid(n,k,stalls,mid)) s=mid+1;
+            else e=mid-1;
+            
+        }
+        return e;
+        
+    }
+};
