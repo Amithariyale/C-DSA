@@ -1,0 +1,55 @@
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+class Solution{
+    private:
+    Node* LCA(Node* root,int a,int b){
+        if(root==NULL){
+            return NULL;
+        }
+        if(root->data==a || root->data==b){
+            return root;
+        }
+        
+        Node* left=LCA(root->left,a,b);
+        
+        Node* right=LCA(root->right,a,b);
+        
+        if(left!=NULL && right!=NULL){
+            return root;
+        }
+        else if(left!=NULL && right==NULL){
+            return left;
+        }
+        else if(left==NULL && right!=NULL){
+            return right;
+        }
+        else{
+            return NULL;
+        }
+    }
+    
+    int solve(Node* root,int x){
+        if(!root)return 0;
+        if(root->data==x)return 1;
+        int left=solve(root->left,x);
+        int right=solve(root->right,x);
+        if(!left && !right)return 0;
+        return left+right+1;
+    }
+    public:
+    /* Should return minimum distance between a and b
+    in a tree with given root*/
+    int findDist(Node* root, int a, int b) {
+        // Your code here
+        Node* lca=LCA(root,a,b);
+        int ans1=solve(lca,a)-1;
+        int ans2=solve(lca,b)-1;
+        
+        return ans1+ans2;
+    }
+};
