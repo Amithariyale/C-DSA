@@ -1,0 +1,58 @@
+/*
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution
+{
+    private:
+    void solve(Node* root,vector<int>&v){
+        if(root==NULL){
+            return ;
+        }
+        
+        solve(root->left,v);
+        
+        v.push_back(root->data);
+        
+        solve(root->right,v);
+        
+    }
+    public:
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    vector<int> merge(Node *root1, Node *root2)
+    {
+       //Your code here
+       vector<int>t1;
+       solve(root1,t1);
+       vector<int>t2;
+       solve(root2,t2);
+       vector<int>ans;
+       int i=0;
+       int j=0;
+       while(i<t1.size() && j<t2.size()){
+           if(t1[i]<=t2[j]){
+               ans.push_back(t1[i++]);
+           }
+           else{
+               ans.push_back(t2[j++]);
+           }
+       }
+       while(i<t1.size()){
+           ans.push_back(t1[i++]);
+       }
+       while(j<t2.size()){
+           ans.push_back(t2[j++]);
+       }
+        
+        return ans;
+    }
+};
