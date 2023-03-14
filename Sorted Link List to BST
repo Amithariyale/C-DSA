@@ -1,0 +1,68 @@
+//User function Template for C++
+
+
+//User function Template for C++
+
+/* 
+//Linked List
+struct LNode
+{
+    int data;
+    struct LNode* next;
+    
+    LNode(int x){
+        data = x;
+        next = NULL;
+    }
+};
+
+//Tree
+struct TNode  
+{  
+    
+    int data;  
+    struct TNode* left;  
+    struct TNode* right; 
+    TNode(int x)
+    {
+        data=x;
+        left=right=NULL;
+    }
+}; */
+class Solution{
+  private:
+    int sizeofll(LNode* head){
+        int cnt=0;
+        LNode* temp=head;
+        while(temp!=NULL){
+            cnt++;
+            temp=temp->next;
+        }
+        return cnt;
+    }
+    
+    TNode* solve(LNode* &head,int n){
+        if(n<=0 || head==NULL)
+            return NULL;
+            
+        TNode* left=solve(head,n/2);
+        
+        TNode* root=new TNode(head->data);
+        
+        root->left=left;
+        
+        head=head->next;
+        
+        root->right=solve(head,n-n/2-1);
+        
+        return root;
+    }
+  public:
+    TNode* sortedListToBST(LNode *head) {
+        //code here
+        int n=sizeofll(head);
+        TNode* root=solve(head,n);
+        
+        return root;
+    }
+};
