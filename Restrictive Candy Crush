@@ -1,0 +1,60 @@
+class Solution{
+    public:
+    string Reduced_String(int k,string s){
+        // Your code goes here
+        int cnt=1;
+
+        stack<pair<int,char>> st;
+
+        int i=0;
+
+        while(i<s.size()){
+
+            if(!st.empty() && st.top().second==s[i]){
+
+            cnt=st.top().first;
+
+            cnt++;
+
+            }
+
+            else
+
+            cnt=1;
+
+            st.push({cnt,s[i]});
+
+            if(cnt==k){
+
+                for(int j=0;j<cnt;j++)
+
+                st.pop();
+
+                cnt=1;
+
+            }
+
+            i++;
+
+        }
+
+        
+
+        string ans;
+
+        while(!st.empty()){
+
+            ans+=st.top().second;
+
+            st.pop();
+
+        }
+
+        reverse(ans.begin(),ans.end());
+
+        return ans;
+        
+    }
+
+
+};
