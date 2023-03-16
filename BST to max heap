@@ -1,0 +1,50 @@
+//User function Template for C++
+
+/*struct Node {
+    int data;
+    Node *left, *right;
+};*/
+
+class Solution{
+    private:
+    void inorder(Node* root,vector<int>&v){
+        if(root==NULL){
+            return ;
+        }
+        
+        inorder(root->left,v);
+        
+        v.push_back(root->data);
+        
+        inorder(root->right,v);
+        
+    }
+    
+    void solve(vector<int>&v,int& i,int n,Node* root){
+        if(root==NULL){
+            return ;
+        }
+        
+        root->data=v[i++];
+        
+        solve(v,i,n,root->right);
+        
+        solve(v,i,n,root->left);
+        
+        
+    }
+  public:
+    void convertToMaxHeapUtil(Node* root)
+    {
+        // Your code goes here
+        vector<int>v;
+        inorder(root,v);
+        int n=v.size();
+        
+        reverse(v.begin(),v.end());
+        
+        int i=0;
+        
+        solve(v,i,n,root);
+    }    
+};
