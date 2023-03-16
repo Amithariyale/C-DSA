@@ -1,0 +1,72 @@
+// User Function template for C++
+
+// Structure of node
+/*struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};*/
+
+class Solution {
+    private:
+    int countNode(Node* root){
+        if(root==NULL){
+            return 0;
+        }
+        
+        int ans=1+countNode(root->left)+countNode(root->right);
+        return ans;
+    }
+    bool isCBT(Node* root,int i,int cnt){
+        if(root==NULL){
+            return true;
+        }
+        if(i>=cnt) {
+            return false;
+        }
+        else{
+            bool left=isCBT(root->left,2*i+1,cnt);
+            bool right=isCBT(root->right,2*i+2,cnt);
+        
+            return (left&&right);
+        }
+    }
+    
+    bool isheap(Node* root){
+        if(root->left==NULL && root->right==NULL){
+            return true;
+        }
+        
+        if(root->right==NULL){
+            return (root->data>root->left->data);
+        }
+        else{
+            bool left=isheap(root->left);
+            bool right=isheap(root->right);
+        
+            return (left && right && (root->data > root->left->data && root->data > root->right->data) );
+                
+        
+        }
+        
+        
+    }
+  public:
+    bool isHeap(struct Node* tree) {
+        // code here
+        int i=0;
+        int cnt=countNode(tree);
+        
+        if(isCBT(tree,i,cnt)&&isheap(tree)){
+            return true; 
+        }
+        else{
+            return false;
+        }
+    }
+};
