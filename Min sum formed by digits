@@ -1,0 +1,29 @@
+class Solution{
+    public:
+    long long int minSum(int arr[], int n)
+    {
+        // Your code goes here
+        priority_queue<int,vector<int>,greater<int>>q;
+        
+        for(int i=0;i<n;i++){
+            q.push(arr[i]);
+        }
+        long long int num1=0,num2=0;
+        
+        while(!q.empty()){
+            int n1=0,n2=0;
+            if(!q.empty()){
+                n1=q.top();
+                q.pop();
+                num1=num1*10+n1;
+            }
+            if(!q.empty()){
+                n2=q.top();
+                q.pop();
+                num2=num2*10+n2;
+            }
+        }
+        
+        return num1+num2;
+    }
+};
