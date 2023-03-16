@@ -1,0 +1,23 @@
+//User function Template for C++
+
+class Solution{
+public:
+    int kthLargest(vector<int> &Arr,int N,int K){
+        
+        priority_queue<int,vector<int>,greater<int> >q;
+        
+        for(int i=0;i<N;i++){
+            int sum=0;
+            for(int j=i;j<N;j++){
+                sum+=Arr[j];
+                q.push(sum);
+            }
+        }
+        
+        while(q.size()>K){
+            q.pop();
+        }
+        int ans=q.top();
+        return ans;
+    }
+};
