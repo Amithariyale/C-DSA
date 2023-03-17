@@ -1,0 +1,36 @@
+// User function Template for C++
+
+class Solution{
+public:
+    vector<int> prefixCount(int N, int Q, string li[], string query[])
+    {
+        // code here
+        unordered_map<string,int>mp;
+
+        for(int i=0;i<N;i++){
+
+            string s=li[i];
+
+            int j=1;
+
+            while(j<=s.length()){
+
+                string ss=s.substr(0,j);
+
+                mp[ss]++;
+
+                j++;
+
+            }
+
+        }
+
+        vector<int>ans;
+
+        for(int i=0;i<Q;i++)
+
+            ans.push_back(mp[query[i]]);
+
+        return ans;
+    }
+};
