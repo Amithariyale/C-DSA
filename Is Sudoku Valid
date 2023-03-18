@@ -1,0 +1,37 @@
+// User function Template for C++
+
+class Solution{
+public:
+    int isValid(vector<vector<int>> mat){
+        // code here
+        for(int i=0;i<mat[0].size();i++){
+            for(int j=0;j<mat[0].size();j++){
+                if(mat[i][j]!=0){
+                    if(!isValid(i,j,mat[i][j],mat))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValid(int row,int col,int x,vector<vector<int>>&board){
+        for(int i=0;i<9;i++){
+            int blockRow=3*(row/3);
+            int blockCol=3*(col/3);
+            for(int i=0;i<9;i++){
+                if(i!=row && board[i][col]==x)
+                    return false;
+                if(i!=col && board[row][i]==x)
+                    return false;
+            }
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    if(i+blockRow !=row && j+blockCol!=col 
+                        && board[blockRow+i][blockCol+j]==x)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+};
