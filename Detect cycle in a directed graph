@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        unordered_map<int,bool>visited;
+        unordered_map<int,bool>dfsCall;
+        
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bool ans=dfsCycle(i,visited,dfsCall,adj);
+                if(ans){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool dfsCycle(int i,unordered_map<int,bool>&visited,unordered_map<int,bool>&dfsCall,vector<int>adj[]){
+        
+        visited[i]=true;
+        dfsCall[i]=true;
+        
+        for(auto j:adj[i]){
+            if(visited[j]==false){
+                bool ans=dfsCycle(j,visited,dfsCall,adj);
+                if(ans){
+                    return true;
+                }
+            }
+            else if(dfsCall[j]==true){
+                return true;
+            }
+        }
+        dfsCall[i]=false;
+        return false;
+    }
+};
