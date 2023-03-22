@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool cmp(vector<int>& a ,vector<int>& b){
+        return a[2]<b[2];
+    }
+    int minScore(int n, vector<vector<int>>& roads) {
+        
+        sort(roads.begin(),roads.end());
+        unordered_map<int, list<pair<int,int>>>adj;
+        for(auto x:roads){
+            adj[x[0]].push_back({x[1],x[2]});
+            adj[x[1]].push_back({x[0],x[2]});
+        }
+        unordered_map<int,bool>visited;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
+        
+        q.push(make_pair(0,1));
+        set<int>s;
+
+        visited[1]=true;
+        while(!q.empty()){
+            int score=q.top().first;
+            int node=q.top().second;
+            q.pop();
+            visited[node]=true;
+            for(auto i:adj[node]){
+                if(!visited[i.first]){
+                    q.push({i.second,i.first});
+                    s.insert(i.second);
+                    
+                }
+            }
+        }
+        int ans=INT_MAX;
+        for(auto i:s){
+            ans=min(ans,i);
+        }
+        return ans;
+    }
