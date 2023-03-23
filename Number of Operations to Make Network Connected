@@ -1,0 +1,83 @@
+
+class Solution {
+    public:
+    
+    void disjointset(int n,vector<int>&parent,vector<int>&rank){
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+            rank[i]=0;
+        }
+    }
+
+    int findParent(int node,vector<int>&parent){
+        if(parent[node]==node){
+            return node;
+        }
+        return parent[node]=findParent(parent[node],parent);
+    }
+
+    void unionByrank(int u,int v,vector<int>&parent,vector<int>&rank){
+        
+        u=findParent(u,parent);
+        v=findParent(v,parent);
+
+        if(rank[u]>rank[v]){
+            parent[v]=u;
+        }
+        else if(rank[u]<rank[v]){
+            parent[u]=v;
+        }
+        else{
+            parent[v]=u;
+            rank[u]++;
+        }
+    }
+public:
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        vector<int> parent(n),rank(n);
+        disjointset(n,parent,rank);
+        int extraedge=0;
+
+        for(auto it:connections){
+            int u=it[0];
+            int v=it[1];
+            u=findParent(u,parent);
+            v=findParent(v,parent);
+            if(u==v){
+                extraedge++;
+            }
+            else{
+                unionByrank(u,v,parent,rank);
+            }
+        }
+        int comp=0;
+        for(int i=0;i<n;i++){
+            int u=findParent(i,parent);
+            if(u==i){
+                comp++;
+            }
+        }
+
+        if(extraedge>=comp-1){
+            return comp-1;
+        }
+        else{
+            return -1;
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
