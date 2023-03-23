@@ -1,0 +1,68 @@
+//User function Template for C++
+
+class Solution{
+    int rootsum=0;
+    Node* targetNode=NULL;
+    
+    private:
+    void solve(Node* root,int target){
+        if(root==NULL){
+            return;
+        }
+        
+        if(root->data==target){
+            targetNode=root;
+            return;
+        }
+        
+        if(root->data>target){
+            rootsum+=root->data;
+            solve(root->left,target);
+        }
+        if(root->data<target){
+            rootsum+=root->data;
+            solve(root->right,target);
+        }
+    }
+    
+    int leaf(Node* root,int target){
+        if(root->left==NULL && root->right==NULL && root->data!=target){
+            return root->data;
+        }
+        
+        int left=INT_MAX;
+        if(root->left){
+            left=leaf(root->left,target);
+        }
+        int right=INT_MAX;
+        if(root->right){
+            right=leaf(root->right,target);
+        }
+        int ans=0;
+        
+        if(root->data!=target){
+            ans=root->data+min(left,right);
+        }
+        else{
+            ans=min(left,right);
+        }
+        return ans;
+    }
+public:
+    int maxDifferenceBST(Node *root,int target){
+        // Code here
+        
+        
+        solve(root,target);
+        
+        if(targetNode==NULL)return -1;
+        
+        int leafsum=leaf(targetNode,target);
+        
+        if(leafsum==INT_MAX){
+           leafsum=0; 
+        }
+        
+        return (rootsum-leafsum);
+    }
+};
