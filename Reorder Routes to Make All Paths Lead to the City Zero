@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        
+        unordered_map<int,vector<int>>adj;
+        unordered_map<int,vector<int>>m;
+        for(auto it:connections){
+            adj[it[0]].push_back(it[1]);
+            m[it[1]].push_back(it[0]);
+        }
+
+        vector<int>vis(n,0);
+
+        int ans=0;
+
+        
+           
+        
+        dfs(0,vis,adj,m,ans);
+        
+            
+        
+
+        return ans;
+    }
+
+    void dfs(int node,vector<int>&vis,unordered_map<int,vector<int>>&adj,unordered_map<int,vector<int>>&m,int& ans){
+
+        vis[node]=1;
+
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                ans++;
+                dfs(it,vis,adj,m,ans);
+            }
+        }
+
+        for(auto it:m[node]){
+            if(!vis[it]){
+                dfs(it,vis,adj,m,ans);
+            }
+        }
+    }
+};
+
+
+
+
+
+
