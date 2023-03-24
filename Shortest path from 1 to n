@@ -1,0 +1,21 @@
+//User function Template for C++
+
+class Solution{   
+public:
+    int minimumStep(int n){
+        //complete the function here
+        
+        int val= 0;
+
+        while(n>1)
+
+        {
+            n%3?n--:n/=3;
+
+            val++;
+
+        }
+
+        return (val);
+    }
+};
