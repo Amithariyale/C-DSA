@@ -1,0 +1,45 @@
+//User function Template for C++
+class Solution {
+  public:
+    string removeReverse(string S) {
+        // code here
+        vector<int> freq(26,0);
+        for(auto x:S){
+            freq[x-'a']++;
+        }
+        int i=0,j=S.length()-1;
+        string ans;
+        while(i<j){
+            while(i<j && freq[S[i]-'a']<=1){
+                ans += S[i];
+                freq[S[i]-'a']--;
+                i++;
+            }
+            if(i<j){
+                freq[S[i]-'a']--;
+                i++;
+            }
+            while(i<j && freq[S[j]-'a']<=1){
+                j--;
+            }
+            if(i<j){
+                freq[S[j]-'a']--;
+                j--;
+            }
+        }
+        
+        j=S.length();
+        while(i<j){
+            if(freq[S[i]-'a']==1){
+                ans += S[i];
+            }
+            freq[S[i]-'a']=0;
+            i++;
+        }
+        if(S.length()%2!=ans.length()%2)
+            for(int i=0;i<ans.length()/2;i++){
+                swap(ans[i],ans[ans.length()-i-1]);
+            }
+        return ans;
+    }
+};
