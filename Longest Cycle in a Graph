@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int longestCycle(vector<int>& edges) {
+
+        int n=edges.size();
+        vector<int>vis(n,0);
+        vector<int>dis(n,0);
+        vector<int>dfsVis(n,0);
+        int ans=-1;
+
+        for(int i=0;i<n;i++){
+            int d=0;
+            if(!vis[i] && edges[i]!=-1){
+                dfs(i,vis,dis,edges,ans,d,dfsVis);
+            }
+        }
+        
+        return ans;
+    }
+
+    void dfs(int i,vector<int>&vis,vector<int>&dis,vector<int>&edges,int&ans,int d,vector<int>&dfsVis){
+        vis[i]=1;
+        dfsVis[i]=1;
+        dis[i]=d;
+        int j=edges[i];
+        if(j!=-1){
+            if(!vis[j]){
+            
+                dfs(j,vis,dis,edges,ans,d+1,dfsVis);
+            }
+            else if(dfsVis[j]){
+                int len=d+1-dis[j];
+                ans=max(ans,len);
+            }
+        }
+        dfsVis[i]=0;
+    }
+};
