@@ -1,0 +1,32 @@
+// User function Template for C++
+
+class Solution{
+#define MOD 1000000007
+public:
+    long int disarrange(int N){
+        // code here
+        if(N==1){
+            return 0;
+        }
+        
+        if(N==2){
+            return 1;
+        }
+        
+        long int prev1=0;
+        
+        long int prev2=1;
+        
+        for(int i=3;i<=N;i++){
+            
+            long int curr=((i-1)%MOD)*((prev2)%MOD+(prev1)%MOD);
+            
+            prev1=prev2;
+            prev2=curr%MOD;
+        }
+        
+        return prev2;
+        
+        
+    }
+};
