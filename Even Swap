@@ -1,0 +1,41 @@
+//User function Template for C++
+
+class Solution
+{
+    public:
+        vector <int> lexicographicallyLargest(vector <int> &a,int n)
+        {
+            // Code here
+            vector<int>ans,temp;
+            
+            int i=0;
+            while(i<n){
+                
+                if(temp.size()==0){
+                    temp.push_back(a[i++]);
+                }
+                
+                else{
+                    if(temp.back()%2==a[i]%2){
+                        temp.push_back(a[i++]);
+                    }
+                    else{
+                        sort(temp.begin(),temp.end(),greater<int>());
+                        
+                        ans.insert(ans.end(),temp.begin(),temp.end());
+                        
+                        temp.clear();
+                    }
+                }
+            }
+            if(temp.size()>0){
+                sort(temp.begin(),temp.end(),greater<int>());
+                        
+                ans.insert(ans.end(),temp.begin(),temp.end());
+                    
+                temp.clear();
+            }
+            
+            return ans;
+        }
+};
