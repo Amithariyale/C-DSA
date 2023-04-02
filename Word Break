@@ -1,0 +1,25 @@
+//User function template for C++
+
+// A : given string to search
+// B : vector of available strings
+
+class Solution
+{
+public:
+    int wordBreak(string A, vector<string> &B) {
+        //code here
+        
+        int n = A.size();
+        vector<bool> dp(n + 1, 0);
+        dp[n] = true;
+        
+        for(int i = n - 1; i >= 0; i--) {
+            for(auto word: B) {
+                if(i + word.size() <= n and A.substr(i, word.size()) == word and dp[i + word.size()])
+                    dp[i] = true;
+            }
+        }
+        
+        return dp[0];
+    }
+};
