@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    long long int count(int coins[], int N, int sum) {
+
+        // code here.
+        vector<vector<long long int>>dp(sum+1,vector<long long int>(N,-1));
+        int i=0;
+        return solve(coins,sum,dp,N,i);
+        
+    }
+    
+    long long int solve(int nums[],int target,vector<vector<long long int>>&dp,int n,int i){
+
+        if(target==0){
+            return 1;
+        }
+        if(target<0 || i>=n){
+            return 0;
+        }
+        if(dp[target][i]!=-1){
+            return dp[target][i];
+        }
+        
+        dp[target][i]=0;
+        int j=i;
+
+        while(j<n){
+            if(nums[j]<=target){
+            dp[target][i]+=solve(nums,target-nums[j],dp,n,j);
+            }
+            j++;
+        }
+
+        return dp[target][i];
+    }
+};
