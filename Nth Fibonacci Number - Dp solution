@@ -1,0 +1,24 @@
+// User function Template for C++
+class Solution {
+  public:
+    
+    #define m 1000000007
+    long long int nthFibonacci(long long int n){
+        // code here
+        vector<long long int>dp(n+1,-1);
+        
+        return solve(n,dp);
+        
+    }
+    
+    long long int solve(long long int n,vector<long long int>&dp){
+        
+        if(n==0)return 0;
+        if(n==1)return 1;
+        if(dp[n]!=-1)return dp[n];
+        
+        dp[n]=(solve(n-1,dp)%m+solve(n-2,dp)%m)%m;
+        
+        return dp[n];
+    }
+};
