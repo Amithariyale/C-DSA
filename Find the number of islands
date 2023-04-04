@@ -1,0 +1,53 @@
+class Solution {
+  public:
+    
+    // Function to find the number of islands.
+    int numIslands(vector<vector<char>>& grid) {
+        // Code here
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<bool>>vis(n,vector<bool>(m,0));
+        
+        int ans=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1' && !vis[i][j]){
+                    dfs(n,m,i,j,vis,grid);
+                    ans++;
+                }
+            }
+        }
+        
+        
+        return ans;
+    }
+    
+    void dfs(int n,int m,int i,int j,vector<vector<bool>>&vis,vector<vector<char>>& grid){
+        
+        
+        
+        int dir[8][2]={{0,1},{1,0},{0,-1},{-1,0},{1,1},{-1,-1},{1,-1},{-1,1}};
+        
+        queue<pair<int,int>>q;
+        
+        q.push({i,j});
+        
+        while(!q.empty()){
+            int s=q.size();
+            for(int l=0;l<s;l++){
+                auto it=q.front();
+                q.pop();
+                for(int k=0;k<8;k++){
+                    int x=it.first+dir[k][0];
+                    int y=it.second+dir[k][1];
+            
+                    if(x>=0 && x<n && y>=0 && y<m && !vis[x][y] && grid[x][y]=='1'){
+                        q.push({x,y});
+                        vis[x][y]=1;
+                    }
+                }
+            }
+        }
+    }
+};
