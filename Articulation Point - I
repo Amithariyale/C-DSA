@@ -1,0 +1,43 @@
+//User function Template for C++
+
+class Solution {
+  public:
+    int timer = 1;
+    vector<int> articulationPoints(int V, vector<int>adj[]) {
+        // Code here
+        
+        vector<int>vis(V);
+        int tim[V], low[V], arti[V] = {0};
+        for(int i=0;i<V;i++) {
+            if(!vis[i]) dfs(i,-1,adj,vis,tim,low,arti);
+        }
+        vector<int>ans;
+        for(int i=0;i<V;i++) {
+            if(arti[i]) ans.push_back(i);
+        }
+        if(ans.size() == 0) return {-1};
+        return ans;
+    }
+    
+    
+    void dfs(int node, int parent, vector<int>adj[], vector<int>&vis, int tim[], int low[], int arti[]) {
+        vis[node] = 1;
+        tim[node] = low[node] = timer;
+        timer++;
+        int child = 0;
+        for(auto i: adj[node]) {
+            if(i == parent) continue;
+            
+            if(!vis[i]) {
+                dfs(i,node,adj,vis,tim,low,arti);
+                low[node] = min(low[node], low[i]);
+                if(low[i] >= tim[node] and parent != -1)
+                    arti[node] = 1;
+                child++;
+            }
+            else low[node] = min(low[node], tim[i]);
+        }
+        if(child > 1 and parent == -1)
+            arti[node] = 1;
+    }
+};
