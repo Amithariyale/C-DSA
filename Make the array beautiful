@@ -1,0 +1,40 @@
+// User function Template for C++
+
+class Solution {
+  public:
+    vector<int> makeBeautiful(vector<int> arr) {
+        // code here
+        vector<int>ans;
+        stack<int>n,p;
+        
+        for(int i=0;i<arr.size();i++){
+            
+            if(arr[i]>=0){
+                if(n.size())
+                    n.pop();
+                    
+                else
+                    p.push(arr[i]);
+            }
+            else{
+                if(p.size())
+                    p.pop();
+                    
+                else
+                    n.push(arr[i]);
+            }
+        }
+        
+        while(!p.empty()){
+            ans.push_back(p.top());
+            p.pop();
+        }
+        while(!n.empty()){
+            ans.push_back(n.top());
+            n.pop();
+        }
+    
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
