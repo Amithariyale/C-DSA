@@ -1,0 +1,27 @@
+//User function Template for C++
+
+class Solution{   
+public:
+    int addMinChar(string str){    
+        //code here
+        
+        int i=0;
+        int j=str.length()-1;
+        
+        int ans=0;
+        
+        while(i<=j){
+            if(str[i]==str[j]){
+                i++;
+                j--;
+            }
+            else{
+                ans++;
+                i=0;
+                j=str.length()-1-ans;
+            }
+        }
+        
+        return ans;
+    }
+};
