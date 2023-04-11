@@ -1,0 +1,56 @@
+//User function template for C++
+
+class Solution
+{
+  public:
+    long long minTime(int arr[], int n, int k)
+    {
+        // code here
+        // return minimum time
+        if(n==1)return arr[0];
+        
+        long long ans=-1;
+        
+        long long low=0;
+        long long high=0;
+        
+        for(int i=0;i<n;i++){
+            high+=arr[i];
+        }
+        
+        while(low<=high){
+            long long mid=(low+high)/2;
+            
+            if(possible(arr,n,k,mid)){
+                ans=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        
+        return ans;
+    }
+    
+    bool possible(int arr[],int n,int k,long long mid){
+        
+        long long paintercnt=0;
+        long long boardcnt=0;
+        
+        for(int i=0;i<n;i++){
+            if(boardcnt+arr[i]<=mid){
+                boardcnt+=arr[i];
+            }
+            else{
+                paintercnt++;
+                if(paintercnt>=k || arr[i]>mid){
+                    return false;
+                }
+                boardcnt=arr[i];
+            }
+        }
+        
+        return true;
+    }
+};
