@@ -1,0 +1,48 @@
+//User function Template for C++
+
+class Solution {
+public:
+    int sumTree(Node* root){
+        if(root==NULL)return 0;
+        return sumTree(root->left)+sumTree(root->right)+root->data;
+    }
+    bool checkBST(Node* root, int l, int r){
+        if(root==NULL)return true;
+        if(root->data <= l || root->data >= r)return false;
+        return checkBST(root->left, l, root->data) && checkBST(root->right, root->data, r);
+    }
+    int length(Node* root){
+        if(root==NULL)return 0;
+        return length(root->left)+length(root->right)+1;
+    }
+    int minSubtreeSumBST(int target, Node *root) {
+        // code here
+        
+        if (root == NULL) {
+            return -1;
+        }
+        int mini = -1;
+        queue<Node*>q;
+        q.push(root);
+    
+        while (!q.empty()) {
+            Node* temp = q.front();
+            q.pop();
+            int currsum = sumTree(temp);    //for checking the sum of subtree
+            if(currsum == target && checkBST(temp , INT_MIN, INT_MAX)){
+                int len = length(temp);
+                if(mini==-1 || mini>len){
+                    mini = len;
+                }
+            }
+            if(temp->left && currsum>=target){
+                q.push(temp->left);
+            }
+            if(temp->right && currsum>=target){
+                q.push(temp->right);
+            }
+        
+        }
+        return mini;
+    }
+};
