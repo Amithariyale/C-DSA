@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minInsertions(string s) {
+        
+        vector<vector<int>>dp(501,vector<int>(501,-1));
+
+        return solve(0,s.length()-1,s,dp);
+    }
+
+    int solve(int low,int high,string &s,vector<vector<int>>&dp){
+        if(low>high){
+            return 0;
+        }
+        if(dp[low][high]!=-1){
+            return dp[low][high];
+        }
+
+        if(s[low]==s[high]){
+            return solve(low+1,high-1,s,dp);
+        }
+
+        int front=1+solve(low,high-1,s,dp);
+
+        int back=1+solve(low+1,high,s,dp);
+
+        dp[low][high]=min(front,back);
+
+        return dp[low][high];
+    }
+};
