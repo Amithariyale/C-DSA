@@ -1,0 +1,26 @@
+// User function Template for C++
+
+class Solution{
+public:
+    int minimumDays(int S, int N, int M){
+        // code here
+        int sunday=S/7;
+        
+        int buyDay=S-sunday;
+        
+        int totel=S*M;
+        
+        int ans=0;
+        
+        if(totel%N==0){
+            ans=totel/N;
+        }
+        else{
+            ans=totel/N+1;
+        }
+        
+        if(ans<=buyDay)return ans;
+        
+        return -1;
+    }
+};
