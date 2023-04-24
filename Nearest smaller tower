@@ -1,0 +1,64 @@
+//User function Template for C++
+
+class Solution
+{
+public:
+    vector<int>solveLeft(vector<int>&arr){
+        int n=arr.size();
+        vector<int>ans(n);
+        stack<int>s;
+        s.push(-1);
+        
+        for(int i=0;i<n;i++){
+            while(arr[s.top()]>=arr[i]){
+                s.pop();
+            }
+            ans[i]=s.top();
+            s.push(i);
+        }
+        
+        return ans;
+    }
+    
+    vector<int>solveRight(vector<int>&arr){
+        int n=arr.size();
+        vector<int>ans(n);
+        stack<int>s;
+        s.push(-1);
+        
+        for(int i=n-1;i>=0;i--){
+            while(arr[s.top()]>=arr[i]){
+                s.pop();
+            }
+            ans[i]=s.top();
+            s.push(i);
+        }
+        
+        return ans;
+    }
+    vector<int> nearestSmallerTower(vector<int> arr)
+    {
+        // code here
+        vector<int>left=solveLeft(arr);
+        vector<int>right=solveRight(arr);
+        
+        vector<int>ans(arr.size());
+        
+        for(int i=0;i<arr.size();i++){
+            
+            int leftDist = left[i] == -1 ? INT_MAX : i - left[i];
+            int rightDist = right[i] == -1 ? INT_MAX : right[i] - i;
+        
+            if (leftDist < rightDist || (leftDist == rightDist && left[i] != -1 && arr[left[i]] <= arr[right[i]])) {
+                ans[i] = left[i];
+            } 
+            else if (leftDist > rightDist || (leftDist == rightDist && right[i] != -1 && arr[right[i]] < arr[left[i]])) {
+                ans[i] = right[i];
+            }
+            else {
+                ans[i] = -1;
+            }
+        }
+        return ans;
+    }
+};
