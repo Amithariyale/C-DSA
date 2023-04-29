@@ -1,0 +1,62 @@
+class Solution {
+public:
+    
+    static bool cmp(vector<int>&a,vector<int>&b){
+        return a[2]<b[2];
+    }
+    
+
+    int find(vector<int>&parent,int x){
+        if(parent[x]==x)return x;
+        return parent[x]=find(parent,parent[x]);
+    }
+    vector<bool> distanceLimitedPathsExist(int n, vector<vector<int>>& edgeList, vector<vector<int>>& queries) {
+        vector<int>parent(n);
+
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+        }
+
+        vector<bool>ans(queries.size(),false);
+
+        vector<vector<int>>query;
+
+        for(int i=0;i<queries.size();i++){
+            vector<int>temp=queries[i];
+            temp.push_back(i);
+            query.push_back(temp);
+        }
+
+        sort(edgeList.begin(),edgeList.end(),cmp);
+
+        sort(query.begin(),query.end(),cmp);
+
+        int j=0;
+
+        for(int i=0;i<query.size();i++){
+
+            while(j<edgeList.size() && edgeList[j][2]<query[i][2]){
+                int u=edgeList[j][0];
+                int v=edgeList[j][1];
+
+                int pu=find(parent,u);
+                int pv=find(parent,v);
+
+                if(pu!=pv){
+                    parent[pu]=pv;
+                }
+                j++;
+            }
+
+            int u=query[i][0];
+            int v=query[i][1];
+            int pu=find(parent,u);
+            int pv=find(parent,v);
+
+            if(pu==pv){
+                ans[query[i][3]]=true;
+            }
+        }
+        return ans;
+    }
+};
