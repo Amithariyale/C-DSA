@@ -1,0 +1,48 @@
+// User function Template for C++
+
+class Solution{
+    public:
+    bool valid(int n,vector<int>&sweetness,int target){
+        
+        int temp=0;
+        int cnt=0;
+        
+        for(int i=0;i<sweetness.size();i++){
+            temp+=sweetness[i];
+            
+            if(temp>=n){
+                cnt++;
+                
+                if(cnt>=target){
+                    return true;
+                }
+                temp=0;
+            }
+        }
+        
+        return false;
+    }
+    int maxSweetness(vector<int>& sweetness, int N, int K) {
+    // Write your code here.
+        int low=0;
+        int high=0;
+        
+        for(int i=0;i<N;i++){
+            high+=sweetness[i];
+        }
+        
+        high=high/(K+1);
+        
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            
+            if(valid(mid,sweetness,K+1)){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return high;
+    }
+};
