@@ -1,0 +1,45 @@
+//User function Template for C++
+
+class Solution{
+public:
+    
+    int maxCoins(int n,vector<vector<int>> &ranges){
+        // Code here
+        sort(ranges.begin(),ranges.end());
+        
+        
+        vector<int>maxi(n);
+        maxi[n-1]=ranges[n-1][2];
+        
+        for(int i=n-2;i>=0;i--){
+            maxi[i]=max(ranges[i][2],maxi[i+1]);
+        }
+        
+        int ans=INT_MIN;
+        
+        for(int i=0;i<n;i++){
+            
+            int idx=ranges[i][1];
+            
+            int sum=ranges[i][2];
+            int temp=0;
+            int low=i+1;
+            int high=n-1;
+            
+            while(low<=high){
+                int mid=low+(high-low)/2;
+                
+                if(ranges[mid][0]>=idx){
+                    temp=maxi[mid];
+                    high=mid-1;
+                }
+                else{
+                    low=mid+1;
+                }
+            }
+            sum+=temp;
+            ans=max(ans,sum);
+        }
+        return ans;
+    }
+};
