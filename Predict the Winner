@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool PredictTheWinner(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+
+        int ans=solve(0,n-1,nums,dp);
+
+        int sum=0;
+
+        for(auto it:nums)sum+=it;
+
+        return ans>=sum-ans;
+    }
+
+    int solve(int i,int n,vector<int>&nums,vector<vector<int>>&dp){
+        if(i>n)return 0;
+
+        if(dp[i][n]!=-1)return dp[i][n];
+
+        int sum1=nums[i]+min(solve(i+1,n-1,nums,dp),solve(i+2,n,nums,dp));
+
+        int sum2=nums[n]+min(solve(i+1,n-1,nums,dp),solve(i,n-2,nums,dp));
+
+        return dp[i][n]=max(sum1,sum2);
+    }
+};
