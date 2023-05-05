@@ -1,0 +1,35 @@
+//User function Template for C++
+
+class Solution{
+public:
+    int cnt=0;
+    unordered_set<int> dfs(Node* root,int k){
+        if(root==NULL){
+            unordered_set<int>s;
+            return s;
+        }
+        
+        auto left=dfs(root->left,k);
+        auto right=dfs(root->right,k);
+        
+        if(left.size()<=k && left.size()>0)cnt++;
+        
+        if(right.size()<=k && right.size()>0)cnt++;
+        
+        unordered_set<int>s;
+        
+        s.insert(left.begin(),left.end());
+        s.insert(right.begin(),right.end());
+        s.insert(root->data);
+        
+        return s;
+    }
+    int goodSubtrees(Node *root,int k){
+        // Code here
+        unordered_set<int>s=dfs(root,k);
+        
+        if(s.size()<=k)cnt++;
+        
+        return cnt;
+    }
+};
