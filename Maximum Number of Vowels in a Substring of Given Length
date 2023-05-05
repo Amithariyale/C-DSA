@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+        queue<char>q;
+        int cnt=0;
+        for(int i=0;i<k;i++){
+            char ch=s[i];
+            q.push(ch);
+            if(ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u')cnt++;
+        }
+
+        int ans=cnt;
+
+        for(int i=k;i<s.length();i++){
+            char front=q.front();
+            q.pop();
+            if(front=='a' || front=='e' || front=='i' || front=='o' || front=='u')cnt--;
+
+            char ch=s[i];
+            q.push(ch);
+            if(ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u')cnt++;
+
+            if(cnt==k)return cnt;
+
+            ans=max(ans,cnt);
+        }
+
+        return ans;
+    }
+};
