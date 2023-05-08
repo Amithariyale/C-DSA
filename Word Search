@@ -1,0 +1,51 @@
+class Solution {
+public:
+    bool flag=false;
+    int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+    bool possible(int x,int y,int m,int n,vector<vector<int>>&vis){
+        return (x>=0 && x<m && y>=0 && y<n && !vis[x][y]);
+    }
+    void solve(int i,int j,int m,int n,vector<vector<char>>&board,string&word,vector<vector<int>>&vis,string&temp,int idx){
+        if(temp==word){
+            flag=true;
+            return ;
+        }
+
+        
+        for(auto it:dir){
+            int x=i+it[0];
+            int y=j+it[1];
+
+            if(possible(x,y,m,n,vis) && board[x][y]==word[idx]){
+                temp+=board[x][y];
+                vis[x][y]=true;
+                solve(x,y,m,n,board,word,vis,temp,idx+1);
+                vis[x][y]=false;
+                temp.pop_back();
+            }
+        }
+        
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        int m=board.size();
+        int n=board[0].size();
+        vector<vector<int>>vis(m,vector<int>(n,0));
+        string temp="";
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(flag)break;
+                else if(board[i][j]==word[0]){
+                    temp+=board[i][j];
+                    vis[i][j]=true;
+                    solve(i,j,m,n,board,word,vis,temp,1);
+                    vis[i][j]=false;
+                    temp.pop_back();
+                }
+                
+            }
+            if(flag)break;
+        }
+        return flag;
+    }
+};
