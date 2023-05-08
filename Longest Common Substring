@@ -1,0 +1,33 @@
+class Solution{
+    public:
+    
+    
+    int longestCommonSubstr (string S1, string S2, int n, int m)
+    {
+        // your code here
+        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        int ans=0;
+        solve(S1,S2,0,0,dp);
+        for(auto it:dp){
+            for(auto x:it)
+                ans=max(ans,x);
+        }
+        return ans;
+    }
+    
+    int solve(string&s1,string&s2,int i,int j,vector<vector<int>>&dp){
+        if(i>=s1.length() || j>=s2.length())return 0;
+        
+        if(dp[i][j]!=-1)return dp[i][j];
+        
+        int ans=0;
+        if(s1[i]==s2[j]){
+            ans=solve(s1,s2,i+1,j+1,dp)+1;
+        }
+        
+        solve(s1,s2,i+1,j,dp);
+        solve(s1,s2,i,j+1,dp);
+        dp[i][j]=ans;
+        return dp[i][j];
+    }
+};
