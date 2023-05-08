@@ -1,0 +1,42 @@
+// User function Template for C++
+
+class Solution{
+public:
+    int move[3]={0,-1,1};
+    int maximumPath(int N, vector<vector<int>> Matrix)
+    {
+        // code here
+        vector<vector<int>>dp(N,vector<int>(N,-1));
+        
+        int ans=0;
+        
+        for(int j=0;j<N;j++){
+            ans=max(ans,solve(0,j,N,Matrix,dp));
+        }
+        return ans;
+        
+    }
+    
+   
+    
+    int solve(int i,int j,int n,vector<vector<int>>&mat,vector<vector<int>>&dp){
+        if(i==n-1)return mat[i][j];
+        
+        if(dp[i][j]!=-1)return dp[i][j];
+        
+        int ans=0;
+        
+        for(auto it:move){
+            int x=i+1;
+            int y=j+it;
+            
+            if(y>=0 && y<n){
+                int sum=mat[i][j]+solve(x,y,n,mat,dp);
+                ans=max(ans,sum);
+            }
+        }
+        
+        
+        return dp[i][j]=ans;
+    }
+};
