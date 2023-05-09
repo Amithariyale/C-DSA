@@ -1,0 +1,45 @@
+// User function Template for C++
+
+class Solution {
+  public:
+    int m=1e9+7;
+    int countStrings(long long int N) {
+        // Code here
+        vector<vector<int>>mat={{1,1},{1,0}};
+        
+        vector<vector<int>>ans=matPower(mat,N+1);
+        
+        return ans[0][0];
+        
+    }
+    vector<vector<int>>matMulty(vector<vector<int>>&a,vector<vector<int>>&b){
+        
+        vector<vector<int>>ans(2,vector<int>(2));
+        
+        for(int i=0;i<2;i++){
+            for(int j=0;j<2;j++){
+                for(int k=0;k<2;k++){
+                    ans[i][j]=(ans[i][j]+1ll*a[i][k]*b[k][j])%m;
+                }
+            }
+        }
+        return ans;
+    }
+    
+    vector<vector<int>>matPower(vector<vector<int>>&mat,long long int n){
+        
+        vector<vector<int>>ans={{1,0},{0,1}};
+        
+        while(n>0){
+            if(n%2==1){
+                ans=matMulty(ans,mat);
+            }
+            mat=matMulty(mat,mat);
+            n/=2;
+        }
+        
+        return ans;
+    }
+    
+    
+};
