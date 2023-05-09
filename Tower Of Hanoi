@@ -1,0 +1,31 @@
+class Solution{
+    public:
+    // You need to complete this function
+
+    // avoid space at the starting of the string in "move disk....."
+    
+    long long ans=0;
+    
+    void solve(int n,int from,int to,int mid){
+        if(n==1){
+            ans++;
+            cout<<"move disk "<<n<<" from rod "<<from<<" to rod "<<to<<endl;
+            return ;
+        }
+        
+        solve(n-1,from,mid,to);
+        ans++;
+        cout<<"move disk "<<n<<" from rod "<<from<<" to rod "<<to<<endl;
+        solve(n-1,mid,to,from);
+    }
+    
+    long long toh(int N, int from, int to, int aux) {
+        // Your code here
+        
+        solve(N,from,to,aux);
+        
+        return ans;
+        
+    }
+
+};
