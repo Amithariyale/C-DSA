@@ -1,0 +1,54 @@
+class Solution
+{
+    public:
+    //Function to find the smallest window in the string s consisting
+    //of all the characters of string p.
+    string smallestWindow (string s, string p)
+    {
+        // Your code here
+        int n=s.size();
+        int m=p.size();
+        
+        if(m>n)return "-1";
+        
+        vector<int>sf(26,0);
+        vector<int>pf(26,0);
+        
+        for(auto x:p){
+            pf[x-'a']++;
+        }
+        
+        int length=INT_MAX;
+        int sidx=-1;
+        int start=0;
+        int end=0;
+        int cnt=0;
+        
+        while(end<n){
+            
+            sf[s[end]-'a']++;
+            
+            if(sf[s[end]-'a']<=pf[s[end]-'a']){
+                cnt++;
+            }
+            
+            if(cnt==m){
+                while( sf[s[start]-'a']>pf[s[start]-'a'] || pf[s[start]-'a']==0 ){
+                    sf[s[start]-'a']--;
+                    start++;
+                }
+                
+                if(end-start+1<length){
+                    length=end-start+1;
+                    sidx=start;
+                }
+            }
+            end++;
+            
+        }
+        
+        if(sidx==-1)return "-1";
+        
+        return s.substr(sidx,length);
+    }
+};
