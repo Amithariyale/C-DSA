@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>curr(nums2.size()+1,0);
+        
+        for(int i=nums1.size()-1;i>=0;i--){
+            for(int j=0;j<nums2.size();j++){
+                int k=j;
+                while(k<nums2.size()  && nums1[i]!=nums2[k])k++;
+
+                int take=k<nums2.size()?(1+curr[k+1]):0;
+
+                int noTake=curr[j];
+
+                curr[j]=max(take,noTake);
+            }
+           
+        }
+        return curr[0];
+    }
+};
