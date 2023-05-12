@@ -1,0 +1,17 @@
+
+class Solution {
+  public:
+    long long squaresInMatrix(int m, int n) {
+        // code here
+        long long ans=0;
+        
+        while(n && m){
+            int prod=n*m;
+            m--;
+            n--;
+            ans+=prod;
+        }
+        
+        return ans;
+    }
+};
