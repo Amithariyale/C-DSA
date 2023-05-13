@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int m=1e9+7;
+    int countGoodStrings(int low, int high, int zero, int one) {
+        vector<int>dp(high+1,0);
+
+        for(int i=high;i>=0;i--){
+            int ans=0;
+            if(i>=low && i<=high)ans++;
+
+            if(i+zero<=high)ans=(ans+dp[i+zero])%m;
+
+            if(i+one<=high)ans=(ans+dp[i+one])%m;
+
+            dp[i]=ans;
+        }
+        return dp[0]%m;
+    }
+
+    
+};
