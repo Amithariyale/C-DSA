@@ -1,0 +1,75 @@
+
+
+/* Node structure  used in the program
+
+struct Node{
+	int data;
+	struct Node * next;
+	struct Node * bottom;
+	
+	Node(int x){
+	    data = x;
+	    next = NULL;
+	    bottom = NULL;
+	}
+	
+};
+*/
+
+/*  Function which returns the  root of 
+    the flattened linked list. */
+
+Node* merge(Node* h1,Node* h2){
+    Node* temp1=h1;
+    Node* temp2=h2;
+    Node* head=new Node(-1);
+    Node* newNode=head;
+    while(temp1!=NULL && temp2!=NULL){
+        if(temp1->data<=temp2->data){
+            newNode->bottom=temp1;
+            temp1=temp1->bottom;
+            newNode->bottom->bottom=NULL;
+            newNode=newNode->bottom;
+        }
+        else{
+            newNode->bottom=temp2;
+            temp2=temp2->bottom;
+            newNode->bottom->bottom=NULL;
+            newNode=newNode->bottom;
+        }
+    }
+    while(temp1!=NULL){
+        newNode->bottom=temp1;
+        temp1=temp1->bottom;
+        newNode->bottom->bottom=NULL;
+        newNode=newNode->bottom;
+    }
+    while(temp2!=NULL){
+        newNode->bottom=temp2;
+        temp2=temp2->bottom;
+        newNode->bottom->bottom=NULL;
+        newNode=newNode->bottom;
+    }
+    return head->bottom;
+}
+Node *flatten(Node *root)
+{
+   // Your code here
+   
+   Node* curr=root;
+   Node* next=NULL;
+   Node* next2=NULL;
+   
+   while(curr->next!=NULL){
+       
+       next=curr->next;
+       curr->next=NULL;
+       next2=next->next;
+       next->next=NULL;
+       curr=merge(curr,next);
+       
+       curr->next=next2;
+   }
+   
+   return curr;
+}
