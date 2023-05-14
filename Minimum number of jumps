@@ -1,0 +1,33 @@
+// Function to return minimum number of jumps to end of array
+
+class Solution{
+  public:
+    int minJumps(int arr[], int n){
+        // Your code here
+        
+        int ans=0;
+        
+        int i=0;
+        
+        while(i<n-1){
+            if(arr[i]==0)return -1;
+            else{
+                int idx=i+1;
+                
+                for(int j=i+1;j<=i+arr[i];j++){
+                    if(j>=n-1){
+                        idx=n-1;
+                        break;
+                    }
+                    if(j+arr[j]>idx+arr[idx]){
+                        idx=j;
+                    }
+                }
+                i=idx;
+                ans++;
+            }
+        }
+        
+        return ans;
+    }
+};
