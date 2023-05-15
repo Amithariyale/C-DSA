@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int findLen(ListNode* head,int k){
+        ListNode* temp=head;
+        int len=1;
+        while(temp->next!=nullptr){
+            temp=temp->next;
+            len++;
+        }
+
+        return len;
+    }
+    ListNode* swapNodes(ListNode* head, int k) {
+        int len=findLen(head,k);
+        int indexFromLast=len-k+1;
+
+        ListNode* temp1=nullptr;
+        ListNode* prev1=nullptr;
+        ListNode* temp2=nullptr;
+        ListNode* prev2=nullptr;
+        
+        int i=1;
+
+        ListNode* temp=head;
+        ListNode* prev=nullptr;
+
+        while(i<=len && temp!=nullptr){
+            if(i==k){
+                temp1=temp;
+                prev1=prev;
+            }
+            if(i==indexFromLast){
+                temp2=temp;
+                prev2=prev;
+            }
+            i++;
+            prev=temp;
+            temp=temp->next;
+        }
+
+        if(prev1!=nullptr){
+            prev1->next=temp2;
+        }
+        if(prev2!=nullptr){
+            prev2->next=temp1;
+        }
+        ListNode* next=temp1->next;
+        temp1->next=temp2->next;
+        temp2->next=next;
+
+        if(k==1){
+            head=temp2;
+        }
+        if(k==len){
+            head=temp1;
+        }
+
+        return head;
+    }
+};
