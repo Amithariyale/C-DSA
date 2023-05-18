@@ -1,0 +1,51 @@
+//User function Template for C++
+
+class Solution {
+    public:
+    bool Possible(int x,int y,vector<vector<int>>&mat,vector<vector<int>>&vis,int n,int m){
+        return (x>=0 && x<n && y>=0 && y<m && mat[x][y]==1 && !vis[x][y]);
+    }
+    void dfs(int i,int j,vector<vector<int>>&mat,vector<vector<int>>&vis,int n,int m){
+        
+        vis[i][j]=1;
+        
+        int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+        
+        for(auto it:dir){
+            int x=i+it[0];
+            int y=j+it[1];
+            
+            if(Possible(x,y,mat,vis,n,m)){
+                dfs(x,y,mat,vis,n,m);
+            }
+        }
+        
+        
+    }
+    int closedIslands(vector<vector<int>>& matrix, int N, int M) {
+        // Code here
+        
+        vector<vector<int>>vis(N,vector<int>(M,0));
+        
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if((matrix[i][j]==1 && !vis[i][j])&& (i==0 || j==0 || i==N-1 || j==M-1)){
+                    dfs(i,j,matrix,vis,N,M);
+                }
+            }
+        }
+        
+        int ans=0;
+        
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if(matrix[i][j]==1 && !vis[i][j]){
+                    dfs(i,j,matrix,vis,N,M);
+                    ans++;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
