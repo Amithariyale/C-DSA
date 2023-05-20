@@ -1,0 +1,50 @@
+class Solution {
+public:
+    void makeGraph(vector<vector<string>>& q, vector<double>& values,unordered_map<string,unordered_map<string,double>>&graph){
+
+        for(int i=0;i<q.size();i++){
+            string ansh=q[i][0];
+            string har=q[i][1];
+            double val=values[i];
+            
+            graph[ansh][har]=val;
+            graph[har][ansh]=1.0/val;
+        }
+    }
+    void dfs(string source,string& des,unordered_map<string,unordered_map<string,double>>&graph,unordered_map<string,int>&vis,double & ans,double temp){
+        if(vis[source])return ;
+        vis[source]=1;
+
+        if(source==des){
+            ans=temp;
+            return;
+        }
+
+        for(auto x:graph[source]){
+            dfs(x.first,des,graph,vis,ans,temp*x.second);
+        }
+    }
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_map<string,unordered_map<string,double>>graph;
+        makeGraph(equations,values,graph);
+
+        vector<double>result;
+
+        for(auto x:queries){
+            string ansh=x[0];
+            string har=x[1];
+
+            if(graph.find(ansh)==graph.end()||graph.find(har)==graph.end()){
+                result.push_back(-1.0);
+            }
+            else{
+                unordered_map<string,int>vis;
+                double ans=-1.0,temp=1.0;
+                dfs(ansh,har,graph,vis,ans,temp);
+                result.push_back(ans);
+            }
+        }
+
+        return result;
+    }
+};
