@@ -1,0 +1,22 @@
+class Solution
+{
+    public:
+    //Function to count number of ways to reach the nth stair.
+    
+    int countWays(int n)
+    {
+        // your code here
+        if(n==1)return 1;
+        int m=1e9+7;
+        int prev=1;
+        int curr=2;
+        
+        for(int i=3;i<=n;i++){
+            int num=(curr+prev)%m;
+            prev=curr;
+            curr=num%m;
+        }
+        
+        return curr;
+    }
+};
