@@ -1,0 +1,47 @@
+/* Structre of the Node of the Binary Tree is as follows
+struct Node
+{
+        int data;
+        struct Node *left, *right;
+};
+*/
+// your task is to complete this function
+// function should create a new binary tree
+// function should return the root node to the 
+// new binary tree formed
+class Solution{
+  public:
+    int findIdx(int num,int l,int h,int preM[]){
+        for(int i=l;i<=h;i++){
+            if(preM[i]==num)return i;
+        }
+    }
+    Node* solve(Node* root,int &preIdx,int start,int end,int pre[],int preM[],int n){
+        if(preIdx>n || start>end)return NULL;
+        
+        root=new Node(pre[preIdx]);
+        ++preIdx;
+        
+        if(start==end)return root;
+        
+        int idx=findIdx(pre[preIdx],start,end,preM);
+        
+        if(idx<end){
+            root->left=solve(root->left,preIdx,start,idx,pre,preM,n);
+            root->right=solve(root->right,preIdx,idx+1,end-1,pre,preM,n);
+        }
+        
+        return root;
+    }
+    Node* constructBinaryTree(int pre[], int preMirror[], int size)
+    {
+        // Code here
+        reverse(preMirror,preMirror+size);
+        
+        Node* root;
+        int preIdx=0;
+        root=solve(root,preIdx,0,size-1,pre,preMirror,size);
+        
+        return root;
+    }
+};
