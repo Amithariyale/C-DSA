@@ -1,0 +1,31 @@
+class Solution {
+public:
+
+    int solve(int i,vector<int>&stone,vector<int>&dp){
+        if(i>=stone.size()){
+            return 0;
+        }
+        if(dp[i]!=-1)return dp[i];
+        int sum=0;
+        int ans=INT_MIN;
+        for(int j=0;j<3;j++){
+            if(i+j<stone.size()){
+                sum+=stone[i+j];
+                ans=max(ans,sum-solve(i+j+1,stone,dp));
+            }
+            else break;
+            
+        }
+        
+        return dp[i]=ans;
+    }
+    string stoneGameIII(vector<int>& stoneValue) {
+        vector<int>dp(stoneValue.size(),-1);
+
+        int alice=solve(0,stoneValue,dp);
+
+        if(alice>0)return "Alice";
+        else if(alice<0)return "Bob";
+        else return "Tie";
+    }
+};
