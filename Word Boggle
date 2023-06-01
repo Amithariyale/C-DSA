@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int dir[8][2]={{0,1},{1,0},{0,-1},{-1,0},{1,1},{-1,-1},{1,-1},{-1,1}};
+      
+    void dfs(int i,int j,int k,vector<vector<char>>&board,string word,string& temp,vector<vector<int>>&vis,int n,int m){
+        
+        vis[i][j]=1;
+        temp+=word[k++];
+        
+        for(auto it:dir){
+            int x=i+it[0];
+            int y=j+it[1];
+            
+            if(x<n && x>=0 && y<m && y>=0 && temp.size()<word.size() && !vis[x][y] && board[x][y]==word[k]){
+                dfs(x,y,k,board,word,temp,vis,n,m);
+                if(temp!=word){
+                    temp.pop_back();
+                    vis[x][y]=0;
+                }
+            }
+        }
+    }
+    bool solve(vector<vector<char>>& board, string word) {
+        // Code here
+        int n=board.size();
+        int m=board[0].size();
+        
+        
+        vector<vector<int>>vis1(n,vector<int>(m,0));
+        vector<vector<int>>vis2(n,vector<int>(m,0));
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                
+                if(board[i][j]==word[0]){
+                    string temp="";
+                    int k=0;
+                    dfs(i,j,k,board,word,temp,vis1,n,m);
+                    if(temp==word)return true;
+                    vis1=vis2;
+                }
+            }
+        }
+        
+        return false;
+    }
+	vector<string> wordBoggle(vector<vector<char> >& board, vector<string>& dictionary) {
+	    // Code here
+	    vector<string>ans;
+	    
+	    for(auto x:dictionary){
+	       if(solve(board,x))ans.push_back(x);
+	    }
+	    
+	   // cout<<ans[0];
+	    return ans;
+	}
+};
