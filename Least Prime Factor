@@ -1,0 +1,22 @@
+// User function Template for C++
+class Solution {
+  public:
+    vector<int> leastPrimeFactor(int n) {
+        // code here
+        
+        vector<int>isPrime(n+1,1);
+        vector<int>ans(n+1,0);
+        ans[1]=1;
+        
+        for(int i=2;i<=n;i++){
+            if(isPrime[i]){
+                for(int j=i;j<=n;j+=i){
+                    if(isPrime[j])ans[j]=i;
+                    isPrime[j]=0;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
