@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        
+        vector<string>ans;
+
+        for(int i=0;i<nums.size();i++){
+            string temp=to_string(nums[i]);
+            if(i==nums.size()-1){
+                ans.push_back(temp);
+                break;
+            }
+            while(i+1<nums.size() && nums[i+1]*1ll-nums[i]*1ll==1)i++;
+
+            if(to_string(nums[i])!=temp){
+                temp+="->";
+                temp+=to_string(nums[i]);
+            }
+            ans.push_back(temp);
+        }
+
+        return ans;
+    }
+};
