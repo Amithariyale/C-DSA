@@ -1,0 +1,33 @@
+//User function Template for C++
+
+class Solution
+{
+    public:
+    //Function to find list of all words possible by pressing given numbers.
+    
+    void solve(int i,int a[],int n,vector<vector<char>>&digit,string &temp,vector<string>&ans){
+        if(i==n){
+            ans.push_back(temp);
+            return ;
+        }
+        
+        for(int j=0;j<digit[a[i]].size();j++){
+            temp+=digit[a[i]][j];
+            solve(i+1,a,n,digit,temp,ans);
+            temp.pop_back();
+        }
+    }
+    vector<string> possibleWords(int a[], int N)
+    {
+        //Your code here
+        vector<vector<char>>digit={{' '},{' '},{'a','b','c'},{'d','e','f'},{'g','h','i'},{'j','k','l'},{'m','n','o'},{'p','q','r','s'},{'t','u','v'},{'w','x','y','z'}};
+        
+        vector<string>ans;
+        
+        string temp="";
+        
+        solve(0,a,N,digit,temp,ans);
+        
+        return ans;
+    }
+};
