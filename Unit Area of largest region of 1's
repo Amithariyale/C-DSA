@@ -1,0 +1,41 @@
+class Solution
+{
+    public:
+    //Function to find unit area of the largest region of 1s.
+    void dfs(int i,int j,int& temp,vector<vector<int>>&grid,vector<vector<int>>&vis,int n,int m){
+        vis[i][j]=1;
+        
+        temp++;
+        int dir[8][2]={{0,1},{1,0},{0,-1},{-1,0},{1,1},{-1,-1},{1,-1},{-1,1}};
+        
+        for(auto it:dir){
+            int x=i+it[0];
+            int y=j+it[1];
+            
+            if(x>=0 && x< n && y>=0 && y<m && grid[x][y] && !vis[x][y]){
+                dfs(x,y,temp,grid,vis,n,m);
+            }
+        }
+    }
+    int findMaxArea(vector<vector<int>>& grid) {
+        // Code here
+        int n=grid.size();
+        int m=grid[0].size();
+        
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        
+        int ans=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] && !vis[i][j]){
+                    int temp=0;
+                    dfs(i,j,temp,grid,vis,n,m);
+                    ans=max(ans,temp);
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
