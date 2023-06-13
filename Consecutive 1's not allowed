@@ -1,0 +1,21 @@
+//User function template for C++
+class Solution{
+public:
+	// #define ll long long
+	int m=1e9+7;
+	ll solve(int n,vector<ll>&dp){
+	    if(n==1)return 2;
+	    if(n==2)return 3;
+	    if(dp[n]!=-1)return dp[n]%m;
+	    
+	    dp[n]=solve(n-1,dp)%m+solve(n-2,dp)%m;
+	    
+	    return dp[n]%m;
+	}
+	ll countStrings(int n) {
+	    // code here
+	    vector<ll>dp(n+1,-1);
+	    
+	    return solve(n,dp)%m;
+	}
+};
