@@ -1,0 +1,45 @@
+class Solution {
+  public:
+    unordered_map<int,int>mpLeft,mpRight;
+    long long solve(int pos,int i,vector<int>&temp,vector<vector<long long>>&dp,int ind){
+        if(i==temp.size())return 0;
+        if(dp[i][ind]!=-1)return dp[i][ind];
+        
+        int left=mpLeft[temp[i]];
+        int right=mpRight[temp[i]];
+        
+        long long takeLeft=abs(pos-left)+abs(left-right)+solve(right,i+1,temp,dp,1);
+        if(i==temp.size()-1)takeLeft+=abs(right);
+        
+        long long takeRight=abs(pos-right)+abs(left-right)+solve(left,i+1,temp,dp,0);
+        if(i==temp.size()-1)takeRight+=abs(left);
+        
+        dp[i][ind]=min(takeLeft,takeRight);
+        return dp[i][ind];
+    }
+    long long minTime(int n, vector<int> &locations, vector<int> &types) {
+        // code here
+        
+        int mx=*max_element(types.begin(),types.end());
+        
+        vector<int>ele(mx+1,0);
+        for(int i=0;i<n;i++){
+            ele[types[i]]=1;
+            if(mpLeft.find(types[i])==mpLeft.end()){
+                mpLeft[types[i]]=locations[i];
+                mpRight[types[i]]=locations[i];
+            }
+            else{
+                mpLeft[types[i]]=min(mpLeft[types[i]],locations[i]);
+                mpRight[types[i]]=max(mpRight[types[i]],locations[i]);
+            }
+        }
+        vector<int>temp;
+        for(int i=0;i<=mx;i++){
+            if(ele[i]==1)temp.push_back(i);
+        }
+        
+        vector<vector<long long>>dp(temp.size(),vector<long long>(2,-1));
+        return solve(0,0,temp,dp,0);
+    }
+};
