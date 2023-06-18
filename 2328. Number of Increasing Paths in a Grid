@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int mod=1e9+7;
+    int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+    int dfs(int i,int j,vector<vector<int>>&grid,vector<vector<int>>&dp,int n,int m){
+        if(dp[i][j]!=-1)return dp[i][j];
+        int ans=1;
+        for(auto it:dir){
+            int x=i+it[0];
+            int y=j+it[1];
+
+            if(x>=0 && x<n && y>=0 && y<m && grid[x][y]>grid[i][j]){
+                ans+=dfs(x,y,grid,dp,n,m)%mod;
+                ans%=mod;
+            }
+        }
+        return dp[i][j]=ans%mod;
+    }
+    int countPaths(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+
+        int ans=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ans+=dfs(i,j,grid,dp,n,m)%mod;
+                ans%=mod;
+            }
+        }
+        return ans%mod;
+    }
+};
