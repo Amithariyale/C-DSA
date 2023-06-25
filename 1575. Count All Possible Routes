@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int m=1e9+7;
+    int solve(int start,int finish,int fuel,vector<int>&loc,vector<vector<int>>&dp){
+        if(fuel<0){
+            return 0;
+        }
+        if(dp[start][fuel]!=-1)return dp[start][fuel];
+
+        int ans=0;
+        if(start==finish && fuel>=0)ans++;
+        
+        for(int i=0;i<loc.size();i++){
+            if(start!=i)
+                ans+=(solve(i,finish,fuel-abs(loc[i]-loc[start]),loc,dp))%m;
+                ans%=m;
+        }
+
+        return dp[start][fuel]=ans%m;
+    }
+    int countRoutes(vector<int>& locations, int start, int finish, int fuel) {
+        vector<vector<int>>dp(locations.size(),vector<int>(fuel+1,0));
+
+        for(int i=0;i<=fuel;i++){
+            int ans=0;
+            if(start==finish && fuel>=0)ans++;
+
+            for(int j=0;i<)
+        }
+        return solve(start,finish,fuel,locations,dp)%m;
+    }
+};
