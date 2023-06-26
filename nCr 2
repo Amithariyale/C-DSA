@@ -1,0 +1,25 @@
+// User function Template for C++
+
+class Solution{
+public:
+    int m=1e9+7;
+    int nCr(int n, int r){
+        // code here
+        if(r>n)return 0;
+        
+        vector<int>prev(r+1,0);
+        vector<int>curr(r+1,0);
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=r;j++){
+                if(j==0 || j==i)curr[j]=1;
+                else {
+                    curr[j]=(prev[j-1]%m+prev[j]%m)%m;
+                }
+            }
+            prev=curr;
+        }
+        
+        return prev[r];
+    }
+    
+};
