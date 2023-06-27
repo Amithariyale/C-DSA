@@ -1,0 +1,26 @@
+class Solution {
+public:
+    
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        auto cmp=[&](const vector<int>&a,const vector<int>&b){
+            return a[0]+a[1]>b[0]+b[1];
+        };
+        priority_queue<vector<int>,vector<vector<int>>,decltype(cmp)>q(cmp);
+        for(int i=0;i<nums1.size() && i<k;i++){
+            q.push({nums1[i],nums2[0],0});
+        }
+
+        vector<vector<int>>ans;
+        while(k-->0 && !q.empty()){
+            vector<int>temp=q.top();
+            q.pop();
+            ans.push_back({temp[0],temp[1]});
+
+            if(temp[2]==nums2.size()-1)continue;
+
+            q.push({temp[0],nums2[temp[2]+1],temp[2]+1});
+        }
+
+        return ans;
+    }
+};
