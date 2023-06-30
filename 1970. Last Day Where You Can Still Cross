@@ -1,0 +1,60 @@
+class Solution {
+public:
+    bool solve(int mid,int row,int col,vector<vector<int>>&cells){
+        int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+        vector<vector<int>>grid(row+1,vector<int>(col+1,0));
+
+        for(int i=0;i<mid;i++){
+            int x=cells[i][0];
+            int y=cells[i][1];
+            grid[x][y]=1;
+        }
+
+        queue<pair<int,int>>q;
+        for(int j=1;j<=col;j++){
+            if(!grid[1][j]){
+                q.push({1,j});
+                grid[1][j]=1;
+            }
+        }
+
+        while(!q.empty()){
+            int i=q.front().first;
+            int j=q.front().second;
+            q.pop();
+            
+            if(i==row)return true;
+            for(auto it:dir){
+                int x=i+it[0];
+                int y=j+it[1];
+
+                if(x>0 && x<=row && y>0 && y<=col && !grid[x][y]){
+                    
+                    q.push({x,y});
+                    grid[x][y]=1;
+                }
+            }
+        }
+
+        return false;
+
+    }
+    int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
+        
+        int low=1;
+        int high=cells.size();
+        int ans=0;
+
+        while(low<=high){
+            int mid=low+(high-low)/2;
+
+            if(solve(mid,row,col,cells)){
+                ans=max(ans,mid);
+                low=mid+1;
+            }
+            else high=mid-1;
+        }
+
+        return ans;
+    }
+};
