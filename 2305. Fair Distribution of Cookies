@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int solve(int i,vector<int>&c,vector<int>&temp){
+        if(i==c.size()){
+            int ans=INT_MIN;
+            for(auto x:temp)ans=max(ans,x);
+            return ans;
+        }
+
+        int ans=INT_MAX;
+
+        for(int j=0;j<temp.size();j++){
+            temp[j]+=c[i];
+            ans=min(ans,solve(i+1,c,temp));
+            temp[j]-=c[i];
+        }
+
+        return ans;
+    }
+    int distributeCookies(vector<int>& cookies, int k) {
+        
+        vector<int>temp(k,0);
+
+        return solve(0,cookies,temp);
+    }
+};
