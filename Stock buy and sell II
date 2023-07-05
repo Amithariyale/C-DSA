@@ -1,0 +1,31 @@
+
+class Solution {
+  public:
+    
+    int stockBuyAndSell(int n, vector<int> &prices) {
+        // code here
+        
+        vector<int>prev(2,0);
+        vector<int>curr(2,0);
+        
+        for(int i=n-1;i>=0;i--){
+            for(int flag=0;flag<=1;flag++){
+                
+                int ans=INT_MIN;
+                if(flag){
+                    int buy=-prices[i]+prev[0];
+                    int noBuy=prev[1];
+                    ans=max(buy,noBuy);
+                }
+                else{
+                    int sell=prices[i]+prev[1];
+                    int noSell=prev[0];
+                    ans=max(sell,noSell);
+                }
+                curr[flag]=ans;
+            }
+            prev=curr;
+        }
+        return prev[1];
+    }
+};
