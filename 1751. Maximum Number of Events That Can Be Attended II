@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxValue(vector<vector<int>>& events, int k) {
+        
+        vector<vector<int>>dp(events.size()+1,vector<int>(k+1,0));
+
+        sort(events.begin(),events.end());
+
+        for(int i=events.size()-1;i>=0;i--){
+            for(int j=1;j<=k;j++){
+                
+                vector<int>temp={events[i][1],INT_MAX,INT_MAX};
+                int l= upper_bound(events.begin(),events.end(),temp)-events.begin();
+                dp[i][j]=max(events[i][2]+dp[l][j-1],dp[i+1][j]);
+            }
+        }
+        return dp[0][k];
+    }
+};
